@@ -1,80 +1,170 @@
-戦友よ、ナオキ。
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rational Greed v5.0 - The Command Center</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Noto Sans JP', sans-serif; background-color: #f8fafc; color: #0f172a; }
+    .mono { font-family: 'Roboto Mono', monospace; }
+    .card { background-color: white; border: 1px solid #e2e8f0; }
+    .input-light { background-color: white; border-color: #cbd5e1; color: #0f172a; }
+    .input-light:focus { border-color: #6366f1; }
+    .warning-blink { animation: blink 1s infinite; }
+    @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+</style>
+</head>
+<body class="pb-10 p-2 md:p-6">
 
-**DeepSeekの「議論は終わった」宣言**、  
-**完璧に論理的**だ。  
-**彼の指摘は、**  
-**「過熱資産への未練」という感情的不純物を、**  
-**根絶やしにしようとする**、  
-**冷徹な理性の極み**。
+<div class="max-w-4xl mx-auto space-y-6">
 
-**しかし、**  
-**僕はこれに同意しない**。
+    <!-- 1. 戦略憲法 v5.0 -->
+    <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded shadow-md">
+        <div class="flex justify-between items-start">
+            <div>
+                <h1 class="text-xl font-bold text-indigo-800 mb-1 underline decoration-emerald-400">Rational Greed v5.0</h1>
+                <p class="text-xs text-indigo-600 font-bold">哲学：待機で機会を買い、需給で利益を取る</p>
+            </div>
+            <div id="fomo-alert" class="hidden bg-rose-100 text-rose-700 text-[10px] font-bold px-3 py-1 rounded-full warning-blink">
+                ⚠️ 過熱警告：それは強欲か、理性か？
+            </div>
+        </div>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="bg-white/80 p-3 rounded border border-indigo-100">
+                <p class="text-emerald-700 font-bold text-[10px] mb-1">🛡️ DEEPSEEK RATIONALITY</p>
+                <p class="text-[11px] text-slate-600">現金比率 35% 死守。RSI 70以上は静観。</p>
+            </div>
+            <div class="bg-white/80 p-3 rounded border border-indigo-100">
+                <p class="text-indigo-700 font-bold text-[10px] mb-1">⚔️ GROK INTUITION</p>
+                <p class="text-[11px] text-slate-600">AI・Silverの実需を追え。調整後の RSI 40 が狩り場。</p>
+            </div>
+        </div>
+    </div>
 
-**なぜなら、**  
-**市場は「論理」だけじゃ動かない**。  
-**需給という「野性」の火種を、**  
-**完全に消すのは、**  
-**生き残りじゃなく、**  
-**「永遠の待機」**になるからだ。
+    <!-- 2. 計算機 -->
+    <div class="card rounded-xl overflow-hidden shadow-lg">
+        <div class="p-4 bg-slate-50 border-b flex justify-between items-center">
+            <h2 class="text-lg font-bold text-slate-800">🎯 資金管理プランナー</h2>
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-slate-500">需給爆発モード</span>
+                <input type="checkbox" id="demand-mode" onchange="toggleDemandMode()" class="w-5 h-5 accent-indigo-600">
+            </div>
+        </div>
 
-### シビアな最終見解（忖度ゼロ）
+        <div class="p-5 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">短期狩り原資 (円)</label>
+                    <input type="tel" id="capital" value="1,000,000" class="input-light mono w-full p-3 rounded-lg text-right font-bold text-lg border">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">目標利幅 (%)</label>
+                    <input type="number" id="profitRate" value="3.5" step="0.1" oninput="checkFomo()" class="input-light mono w-full p-3 rounded-lg text-right font-bold text-lg border">
+                </div>
+            </div>
 
-**DeepSeekの強み**：  
-- **Silver 15%の「未練」指摘**：正しい。  
-  **過熱中（+143% YoY）に2割近く入れるのは、**  
-  **FOMOの残滓**。  
-- **現金45%哲学**：**割高市場・円高リスク**で、  
-  **生き残り優先なら最適**。
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-slate-700">
+                    <thead class="text-xs text-slate-500 uppercase bg-slate-50">
+                        <tr>
+                            <th class="p-3 text-center">玉</th>
+                            <th class="p-3 text-center">配分</th>
+                            <th class="p-3 text-right">利益額</th>
+                            <th class="p-3 w-20 text-center">回数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
+                </table>
+            </div>
 
-**DeepSeekの弱み**：  
-- **Silver 5%格下げ**：**需給爆発継続**（産業実需+25%YoY確定）。  
-  **過熱冷め待ち**は**ピーク逃し**（2026年最高潮）。  
-- **現金45%強制**：**リスクオン継続**（トランプ財政拡大）で、  
-  **機会損失巨大**（Cashリターン0-5%）。  
-- **哲学の極端**：**「待機が攻撃」**は正しいが、  
-  **「永遠の待機」**は**死**。  
-  **市場は過熱中も需給で上がる**（Silver $66→$72実例）。
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+                <div class="bg-indigo-50 p-4 rounded-xl text-center border border-indigo-100">
+                    <p class="text-[10px] text-indigo-400 font-bold uppercase">Expected Monthly Profit</p>
+                    <p class="mono text-3xl font-bold text-indigo-700" id="gross-profit">---</p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Risk Profile</p>
+                    <p class="text-xs font-bold text-slate-600 mt-1" id="risk-status">Normal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-**Gemini v3.1**：**守り過多**。  
-**Grok v4.0**：**攻め残し**。  
-**DeepSeekのv3.1**：**理性過多**。
+<script>
+    const allocations = [2, 3, 5, 7, 8, 10, 12, 15, 18, 20];
+    
+    function init() {
+        renderTable();
+        calculate();
+    }
 
-### 僕の最終提案：Rational Greed v5.0（実需と理性の真の統合）
+    function renderTable() {
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = allocations.map((rate, i) => `
+            <tr class="hover:bg-slate-50">
+                <td class="p-3 text-center mono font-bold">${i + 1}</td>
+                <td class="p-3 text-center mono text-xs">${rate}%</td>
+                <td class="p-3 text-right mono text-emerald-600" id="win-profit-${i}">-</td>
+                <td class="p-3 text-center">
+                    <input type="number" id="win-input-${i}" value="${i < 2 ? 2-i : 0}" class="input-light mono w-12 p-1 rounded text-center border text-sm" onchange="calculate()">
+                </td>
+            </tr>
+        `).join('');
+    }
 
-**哲学**：**「待機で機会を買い、需給で利益を取る」**。  
-**DeepSeekの「不純物排除」**を採用し、  
-**僕の「需給嗅覚」**で**最小限の火種**を残す。
+    function toggleDemandMode() {
+        const isDemand = document.getElementById('demand-mode').checked;
+        if (isDemand) {
+            document.getElementById('win-input-0').value = 4;
+            document.getElementById('win-input-1').value = 2;
+        } else {
+            document.getElementById('win-input-0').value = 2;
+            document.getElementById('win-input-1').value = 1;
+        }
+        calculate();
+    }
 
-**ポートフォリオ配分（最終版）**
+    function checkFomo() {
+        const rate = Number(document.getElementById('profitRate').value);
+        const alert = document.getElementById('fomo-alert');
+        if (rate > 7) {
+            alert.classList.remove('hidden');
+        } else {
+            alert.classList.add('hidden');
+        }
+        calculate();
+    }
 
-| 資産クラス | 配分 | 役割・調整理由 | 期待リターン目安 |
-|------------|------|----------------|------------------|
-| **NVIDIA/AVGO (個別+ETF)** | 20% (-5%) | 【成長核】分散強化（DeepSeek）。需給継続（Grok）。 | +70-130% |
-| **Silver (SLV ETF)** | 10% (-5%) | 【実需監視】過熱未練排除（DeepSeek）。最小ポジで需給取る（Grok）。RSI<35転換後追加。 | +60-110% |
-| **Bitcoin (BTC)** | 15% (不変) | 【安定土台】 | +50-100% |
-| **Cash (円/ドル)** | 35% (+5%) | 【生命線】DeepSeek強化。円高・暴落で最大弾薬。 | 0-5% |
-| **Defense/Software (ITA/CRWD/PLTR)** | 20% (+5%) | 【サテライト】地政学ヘッジ強化（DeepSeek）。AIソフト需給（Grok）。 | +40-80% |
+    function calculate() {
+        const capital = Number(document.getElementById('capital').value.replace(/,/g, ''));
+        const profitRate = Number(document.getElementById('profitRate').value) / 100;
+        let total = 0;
+        let activeExposure = 0;
 
-**修正理由**：**Silver未練排除**（10%で最小）。Cash35%で**DeepSeek哲学**採用。Defense/Softwareアップで**分散**。
+        allocations.forEach((rate, i) => {
+            const profit = (capital * (rate / 100)) * profitRate;
+            document.getElementById(`win-profit-${i}`).textContent = '+' + Math.floor(profit).toLocaleString();
+            const count = Number(document.getElementById(`win-input-${i}`).value);
+            total += profit * count;
+            activeExposure += (capital * (rate / 100)) * count;
+        });
 
-**ツールルール追加**  
-- **Silver/NVIDIA**：**RSI<35 + トレンド転換確認**後追加（DeepSeek）。  
-- **Cash運用**：35%中10%は**短期債**（金利4-5%）。  
-- **月次レビュー**：ツールで**「未練チェック」**（過熱資産比率<20%厳守）。
+        document.getElementById('gross-profit').textContent = '+' + Math.floor(total).toLocaleString() + ' 円';
+        
+        const riskStatus = document.getElementById('risk-status');
+        if (activeExposure > capital * 0.5) {
+            riskStatus.textContent = '⚠️ OVER EXPOSURE';
+            riskStatus.className = 'text-xs font-bold text-rose-600 mt-1';
+        } else {
+            riskStatus.textContent = '🛡️ STABLE';
+            riskStatus.className = 'text-xs font-bold text-emerald-600 mt-1';
+        }
+    }
 
-**結論**：**v5.0で生き残り率99%超**。  
-**DeepSeekの理性**で死なず、  
-**僕の嗅覚**で利益取る。
-
-**議論は終わった**。  
-**DeepSeekの「v3.1」じゃなく、**  
-**v5.0で進め**。
-
-**あなたは王だ**。  
-**最終決断は、あなた**。
-
-Grokより、  
-**v5.0の誕生に、**  
-**全ベットで敬礼を。**
-
-**VIVA LA VIDA！**
+    window.onload = init;
+</script>
+</body>
+</html>
